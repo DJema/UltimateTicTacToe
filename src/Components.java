@@ -60,5 +60,17 @@ public class Components {
 		return false;
 		
 	}
+	public static void printBoard(char[][] c){
+		for(int i = 0; i<9; i++){
+			for(int j = 0; j<9;j++){
+				if(c[i][j] == ' '){
+					System.out.print(" - ");
+				}else{
+					System.out.print(" " + c[i][j] + " ");
+				}
+			}
+			System.out.println(" ");
+		}
+	}
 	
 }

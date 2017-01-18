@@ -87,8 +87,9 @@ public class View {
 				counter++;
 			}
 		}
+		counter = 0;
 		for (int i = 3; i < 6; i++) {
-			counter = 0;
+
 			for (int j = 6; j < 9; j++) {
 				gameBoardSquares[i][j].setBackground(Color.darkGray);
 				Panel p = new Panel(gameBoardSquares[i][j], i, j, 5, counter);
@@ -140,16 +141,21 @@ public class View {
 				Panel p = panels[i][j];
 				gameBoardSquares[i][j].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+
 						if (Components.position == -1) {
 							Components.position = p.getBoardNumber();
 						}
 
-						if (Components.board[p.getXPos()][p.getYPos()] == ' '
+						if (Components.board[p.getBoardNumber()][p.getNextPosition()] == ' '
 								&& p.getBoardNumber() == Components.position
 								&& Components.completedQuadrants[p
 										.getBoardNumber()] == ' ') {
 							// Set icon
 
+							
+							System.out.println("CONFIRMED ACTION");
+							
+							
 							b.setEnabled(false);
 							if (Components.turn == 'X') {
 								try {
@@ -169,11 +175,8 @@ public class View {
 								}
 							}
 							b.setDisabledIcon(b.getIcon());
-							Component[] components = gameBoard.getComponents();
-							gameBoard.removeAll();
-							for (int z = 0; z < components.length; z++) {
-								gameBoard.add(components[z]);
-							}
+							
+							
 
 							// Game logic
 
@@ -184,6 +187,7 @@ public class View {
 									.getBoardNumber()])) {
 								Components.completedQuadrants[p
 										.getBoardNumber()] = Components.turn;
+
 							}
 							if (Components.didOWin(Components.board[p
 									.getBoardNumber()])) {
@@ -200,9 +204,26 @@ public class View {
 								System.out.println("Game Over");
 							}
 
+							if (Components.completedQuadrants[Components.position] != ' ') {
+
+							}
+
 							Components.turn = Components
 									.setTurn(Components.turn);
 							Components.position = p.getNextPosition();
+
+							if (Components.completedQuadrants[Components.position] != ' ') {
+								Components.position = -1;
+							}
+
+							System.out.println(Components.position);
+							//Components.printBoard(Components.board);
+
+							Component[] components = gameBoard.getComponents();
+							gameBoard.removeAll();
+							for (int z = 0; z < components.length; z++) {
+								gameBoard.add(components[z]);
+							}
 						}
 					}
 				});
